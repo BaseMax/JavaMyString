@@ -12,7 +12,7 @@ A tiny implementation of **String** class in java as final project.
 
 ## Structure
 
-```
+```java
 public MyString()
 public MyString(char ch)
 public MyString(char ch[])
