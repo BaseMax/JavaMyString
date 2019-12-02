@@ -2,54 +2,56 @@ package com.asrez;
 import com.asrez.utils.MyString;
 public class main {
 	public static void main(String[] args) {
-		MyString str2 = new MyString('T');
-		str2.setAt(1, 'E');
-		str2.setAt(2, '!');
-		str2.setAt(3, 'S');
-		str2.setAt(4, 'T');
-		str2.myLineDisplay();
+		System.out.println("Stage1"); //////////////////////////
 
-		System.out.println(""); //////////////////////////
+		MyString input1 = new MyString('T');
+		input1.setAt(1, 'E');
+		input1.setAt(2, '!');
+		input1.setAt(3, 'S');
+		input1.setAt(4, 'T');
+		input1.display();
 
-		MyString str = new MyString(str2);
-		System.out.println(str.myCharAt(0));
-		str.myLineDisplay();
-		System.out.println(str.myLength());
+		System.out.println("Stage2"); //////////////////////////
 
-		System.out.println(""); //////////////////////////
+		MyString input2 = new MyString(input1);
+		System.out.println(input2.charAt(0));
+		input2.display();
+		System.out.println(input2.length());
 
-		char[] myToArray = str.myToCharArray();
-		System.out.println(myToArray);
+		System.out.println("Stage3"); //////////////////////////
 
-		System.out.println(""); //////////////////////////
+		char[] array = input2.toCharArray();
+		System.out.println(array);
 
-		str = str.myConcat(str2);
-		str.myLineDisplay();
-		System.out.println(str.myLength());
+		System.out.println("Stage4"); //////////////////////////
 
-		System.out.println(""); //////////////////////////
+		input2 = input2.concat(input1);
+		input2.display();
+		System.out.println(input2.length());
 
-		MyString substr = str.mySubString(0, 3);
-		substr.myLineDisplay();
+		System.out.println("Stage5"); //////////////////////////
 
-		System.out.println(""); //////////////////////////
+		MyString input3 = input2.subString(0, 3);
+		input3.display();
 
-		substr = str.mySubString(3);
-		substr.myLineDisplay();
+		System.out.println("Stage6"); //////////////////////////
 
-		System.out.println(""); //////////////////////////
+		input3 = input2.subString(3);
+		input3.display();
 
-		substr = str.mySubString(-3);
-		substr.myLineDisplay();
+		System.out.println("Stage7"); //////////////////////////
 
-		System.out.println(""); //////////////////////////
+		input3 = input2.subString(-3);
+		input3.display();
 
-		substr = str.mySubString(-5, 2);
-		substr.myLineDisplay();
+		System.out.println("Stage8"); //////////////////////////
 
-		System.out.println(""); //////////////////////////
+		input3 = input2.subString(-5, 2);
+		input3.display();
 
-		substr = str.mySubString(-5, 90);
-		substr.myLineDisplay();
+		System.out.println("Stage9"); //////////////////////////
+
+		input3 = input2.subString(-5, 90);
+		input3.display();
 	}
 }

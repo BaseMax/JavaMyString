@@ -13,39 +13,39 @@ package com.asrez.utils;
  **/
 public class MyString {
 	private final int DEFAULT_ARRAY_SIZE = 10;
-	private char[] characters;
+	private char[] array;
 	private int length;
 
 	public MyString() {
 		length = DEFAULT_ARRAY_SIZE;
-		characters = new char[length];
+		array = new char[length];
 	}
 
-	public MyString(char ch) {
+	public MyString(char c) {
 		length = DEFAULT_ARRAY_SIZE;
-		characters = new char[length];
-		characters[0] = ch;
+		array = new char[length];
+		array[0] = c;
 	}
 
-	public MyString(char ch[]) {
-		length = ch.length;
-		characters = new char[length];
+	public MyString(char c[]) {
+		length = c.length;
+		array = new char[length];
 		for(int i = 0; i < length; i++)
-			characters[i] = ch[i];
+			array[i] = c[i];
 	}
 
-	public MyString(MyString otherMyString) {
-		length = otherMyString.myLength();
-		characters = new char[length];
+	public MyString(MyString value) {
+		length = value.length();
+		array = new char[length];
 		for(int i = 0; i < length; i++)
-			characters[i] = otherMyString.myCharAt(i);
+			array[i] = value.charAt(i);
 	}
 
-	public MyString(String otherMyString) {
-		length = otherMyString.length();
-		characters = new char[length];
+	public MyString(String value) {
+		length = value.length();
+		array = new char[length];
 		for(int i = 0; i < length; i++)
-			characters[i] = otherMyString.charAt(i);
+			array[i] = value.charAt(i);
 	}
 
 	public boolean equals(Object o) {
@@ -60,7 +60,7 @@ public class MyString {
 
 		int i = 0;
 		while(i < this.length) {
-			if(this.characters[i] != other.characters[i])
+			if(this.array[i] != other.array[i])
 				return false;
 			// same
 			i++;
@@ -69,33 +69,34 @@ public class MyString {
 	}
 
 	public char charAt(int index) {
-		if((index < 0) || (index >= characters.length))
+		if((index < 0) || (index >= array.length))
 			throw new StringIndexOutOfBoundsException(index);
-		return characters[index];
+		return array[index];
 	}
 
-	public MyString concat(MyString otherMyString) {
-		int length = this.characters.length + otherMyString.characters.length;
+	public MyString concat(MyString value) {
+		int length = this.array.length + value.array.length;
 
 		char[] temp = new char[length];
 
-		for(int i = 0; i < this.characters.length; i++)
-			temp[i] = this.characters[i];
+		for(int i = 0; i < this.array.length; i++)
+			temp[i] = this.array[i];
 
-		for(int i = 0; i < otherMyString.characters.length; i++)
-			temp[this.characters.length + i] = otherMyString.characters[i];
+		for(int i = 0; i < value.array.length; i++)
+			temp[this.array.length + i] = value.array[i];
 
 		return new MyString(temp);
 	}
 
-	public void lineDisplay() {
-		System.out.println(characters);
-		// for(int i = 0; i < this.characters.length; i++) {
-		//	if(characters[i] == '\n') {
-		//		break;
-		//	} else {
-		//		System.out.format("%c", characters[i]);
-		//	}
+	public void display() {
+
+		System.out.println(array);
+		// for(int i = 0; i < this.array.length; i++) {
+		// 	if(array[i] == '\n') {
+		// 		break;
+		// 	} else {
+		// 		System.out.format("%c", array[i]);
+		// 	}
 		// }
 		// System.out.println("");
 	}
@@ -108,7 +109,7 @@ public class MyString {
 			return -1;
 
 		for(int i = fromIndex; i < length; i++)
-			if(characters[i] == ch)
+			if(array[i] == ch)
 				return i;
 		return -1;
 	}
@@ -121,12 +122,12 @@ public class MyString {
 		return length;
 	}
 
-	public void setAt(int index, char ch) {
+	public void setAt(int index, char c) {
 		if(index < 0)
 			throw new StringIndexOutOfBoundsException(index);
 		if(index > length)
 			throw new StringIndexOutOfBoundsException(index);
-		characters[index] = ch;
+		array[index] = c;
 	}
 
 	public MyString subString(int low, int high) {
@@ -151,10 +152,10 @@ public class MyString {
 
 		MyString result = new MyString();
 		result.length = high - low + 1;
-		result.characters = new char[result.length];
+		result.array = new char[result.length];
 
 		for(int i = 0; i < result.length; i++)
-			result.characters[i] = this.characters[low + i];
+			result.array[i] = this.array[low + i];
 
 		return result;
 	}
@@ -169,14 +170,14 @@ public class MyString {
 			throw new StringIndexOutOfBoundsException(high - low);
 		MyString result = new MyString();
 		result.length = high - low + 1;
-		result.characters = new char[result.length];
+		result.array = new char[result.length];
 		for(int i = 0; i < result.length; i++)
-			result.characters[i] = this.characters[low + i];
+			result.array[i] = this.array[low + i];
 
 		return result;
 	}
 
 	public char[] toCharArray() {
-		return characters;
+		return array;
 	}
 }
