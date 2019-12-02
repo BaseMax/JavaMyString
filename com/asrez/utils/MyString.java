@@ -11,102 +11,172 @@ package com.asrez.utils;
  * @Reference : https://courses.cs.washington.edu/courses/cse341/98au/java/jdk1.2beta4/docs/api/java/lang/String.html
  *
  **/
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
-import java.util.Arrays;
 public class MyString {
-   private char[] value;
-   private int count;
-   private int offset;
-   public MyString() {
-       this.offset = 0;
-       this.count = 0;
-       this.value = new char[0];
-   }
-   public MyString(char value[]) {
-       // String s = new String(a);
-       this.offset = 0;
-       // Note: We will use this variable two times...
-       int size = value.length;
-       this.count = size;
-       this.value = Arrays.copyOf(value, size);
-   }
-   public MyString(String value) {
-       // String s = new String("hi");
-       this.offset = 0;
-       this.count = value.length();
-       this.value = value.toCharArray();
-   }
-   public MyString(char value[], int offset, int count) {
-       // String s = new String(a, 2, 4);
-       if(offset < 0) {
-           throw new StringIndexOutOfBoundsException(offset);
-       }
-       if(count < 0) {
-           throw new StringIndexOutOfBoundsException(count);
-       }
-       if(offset > value.length - count) {
-           throw new StringIndexOutOfBoundsException(offset + count);
-       }
-       this.offset = 0;
-       this.count = count;
-       this.value = Arrays.copyOfRange(value, offset, offset+count);
-   }
-//    public MyString(int offset, int count, char value[]) {
-//        this.offset = offset;
-//        this.count = count;
-//        this.value = value;
-//    }
-   public int getLength() {
-       return this.count;
-   }
-   public char[] getValue() {
-       if(this.offset == 0) {
-           return this.value;
-       }
-       return Arrays.copyOfRange(this.value, this.offset, this.count);
-   }
-   public MyString subString(int beginIndex){
-       if(beginIndex < 0) {
-           throw new StringIndexOutOfBoundsException(beginIndex);
-//            beginIndex=this.size - beginIndex;
-           }
-       char[] temp = new char[this.value.length-beginIndex];
-       for(int i = beginIndex; i < this.value.length; i++){
-           temp[i-beginIndex] = this.value[beginIndex];
-       }
-       return new MyString(temp);
-   }
-   public MyString subString(int beginIndex, int endIndex) {
-       if(beginIndex < 0) {
-           throw new StringIndexOutOfBoundsException(beginIndex);
-       }
-       if(endIndex > count) {
-           throw new StringIndexOutOfBoundsException(endIndex);
-       }
-       if(beginIndex > endIndex) {
-           throw new StringIndexOutOfBoundsException(endIndex - beginIndex);
-       }
-       if((beginIndex == 0) && (endIndex == count)) {
-           return this;
-       }
-       return new MyString(value, this.offset + beginIndex, endIndex - beginIndex);
-   }
-//    public MyString subString2(int beginIndex) {
-//        int endIndex=this.size;
-//        if(beginIndex < 0) {
-//              // beginIndex
-//            throw new StringIndexOutOfBoundsException();
-//        }
-//        if(endIndex > count) {
-//             // endIndex
-//            throw new StringIndexOutOfBoundsException();
-//        }
-//        if(beginIndex > endIndex) {
-//            // endIndex - beginIndex
-//            throw new StringIndexOutOfBoundsException();
-//        }
-//        return ((beginIndex == 0) && (endIndex == count)) ? this :
-//            new MyString(this.offset + beginIndex, endIndex - beginIndex, value);
-//        }
-//    }
+	private final int DEFAULT_ARRAY_SIZE = 10;
+	private char[] characters;
+	private int length;
+
+	public MyString() {
+		length = DEFAULT_ARRAY_SIZE;
+		characters = new char[length];
+	}
+
+	public MyString(char ch) {
+		length = DEFAULT_ARRAY_SIZE;
+		characters = new char[length];
+		characters[0] = ch;
+	}
+
+	public MyString(char ch[]) {
+		length = ch.length;
+		characters = new char[length];
+		for(int i = 0; i < length; i++)
+			characters[i] = ch[i];
+	}
+
+	public MyString(MyString otherMyString) {
+		length = otherMyString.myLength();
+		characters = new char[length];
+		for(int i = 0; i < length; i++)
+			characters[i] = otherMyString.myCharAt(i);
+	}
+
+	public MyString(String otherMyString) {
+		length = otherMyString.length();
+		characters = new char[length];
+		for(int i = 0; i < length; i++)
+			characters[i] = otherMyString.charAt(i);
+	}
+
+	public boolean equals(Object o) {
+		MyString other;
+		if(!(o instanceof MyString))
+			return false;
+		else
+			other = (MyString) o;
+
+		if(this.length != other.length)
+			return false;
+
+		int i = 0;
+		while(i < this.length) {
+			if(this.characters[i] != other.characters[i])
+				return false;
+			// same
+			i++;
+		}
+		return true;
+	}
+
+	public char charAt(int index) {
+		if((index < 0) || (index >= characters.length))
+			throw new StringIndexOutOfBoundsException(index);
+		return characters[index];
+	}
+
+	public MyString concat(MyString otherMyString) {
+		int length = this.characters.length + otherMyString.characters.length;
+
+		char[] temp = new char[length];
+
+		for(int i = 0; i < this.characters.length; i++)
+			temp[i] = this.characters[i];
+
+		for(int i = 0; i < otherMyString.characters.length; i++)
+			temp[this.characters.length + i] = otherMyString.characters[i];
+
+		return new MyString(temp);
+	}
+
+	public void lineDisplay() {
+		System.out.println(characters);
+		// for(int i = 0; i < this.characters.length; i++) {
+		//	if(characters[i] == '\n') {
+		//		break;
+		//	} else {
+		//		System.out.format("%c", characters[i]);
+		//	}
+		// }
+		// System.out.println("");
+	}
+
+	public int indexOf(char ch) {
+		int fromIndex = 0;
+		if(fromIndex < 0)
+			fromIndex = 0;
+		else if(fromIndex >= length)
+			return -1;
+
+		for(int i = fromIndex; i < length; i++)
+			if(characters[i] == ch)
+				return i;
+		return -1;
+	}
+
+	/**
+	 * Returns the length of string
+	 * @return
+	 */
+	public int length() {
+		return length;
+	}
+
+	public void setAt(int index, char ch) {
+		if(index < 0)
+			throw new StringIndexOutOfBoundsException(index);
+		if(index > length)
+			throw new StringIndexOutOfBoundsException(index);
+		characters[index] = ch;
+	}
+
+	public MyString subString(int low, int high) {
+		if(low < 0) {
+			// System.out.println(length);
+			// System.out.println(low);
+			low = length + low;
+			// System.out.println(low);
+			high+=low;
+			// System.out.println(high);
+			if(high > length -1) {
+				high=length-1;
+				// System.out.println(high);
+			}
+		}
+		if(low < 0)
+			throw new StringIndexOutOfBoundsException(low);
+		if(high > length)
+			throw new StringIndexOutOfBoundsException(high);
+		if(low > high)
+			throw new StringIndexOutOfBoundsException(high - low);
+
+		MyString result = new MyString();
+		result.length = high - low + 1;
+		result.characters = new char[result.length];
+
+		for(int i = 0; i < result.length; i++)
+			result.characters[i] = this.characters[low + i];
+
+		return result;
+	}
+
+	public MyString subString(int low) {
+		if(low < 0)
+			low = length + low;
+		int high = length-1;
+		if(low < 0)
+			throw new StringIndexOutOfBoundsException(low);
+		if(low > high)
+			throw new StringIndexOutOfBoundsException(high - low);
+		MyString result = new MyString();
+		result.length = high - low + 1;
+		result.characters = new char[result.length];
+		for(int i = 0; i < result.length; i++)
+			result.characters[i] = this.characters[low + i];
+
+		return result;
+	}
+
+	public char[] toCharArray() {
+		return characters;
+	}
 }
