@@ -4,6 +4,32 @@ A tiny implementation of **String** class in java as final project.
 
 # Java MyString
 
+## Features
+
+- Tiny code (Suitable to learn from it)
+- Own class
+- Suitable performance
+
+## Structure
+
+```
+public MyString()
+public MyString(char ch)
+public MyString(char ch[])
+public MyString(MyString otherMyString)
+public MyString(String otherMyString)
+public boolean equals(Object o)
+public char charAt(int index)
+public MyString concat(MyString otherMyString)
+public void lineDisplay()
+public int indexOf(char ch)
+public int length()
+public void setAt(int index, char ch)
+public MyString subString(int low, int high)
+public MyString subString(int low)
+public char[] toCharArray()
+```
+
 ## Build
 
 ```
