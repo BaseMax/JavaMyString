@@ -1,7 +1,7 @@
 package com.asrez;
 import com.asrez.utils.MyString;
 public class main {
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 		MyString str2 = new MyString('T');
 		str2.setAt(1, 'E');
 		str2.setAt(2, '!');
@@ -51,16 +51,5 @@ public class main {
 
 		substr = str.mySubString(-5, 90);
 		substr.myLineDisplay();
-
-        // MyString v=new MyString("Hello!");
-        // System.out.println(v.myToCharArray());
-        // System.out.println(v.myLength());
-        // System.out.println(v.mySubString(-3).myToCharArray());
-        // System.out.println(v.mySubString(2, 5).myToCharArray());
-
-		// System.out.println(v.getLength());
-		// System.out.println(v.getValue());
-		// System.out.println(v.subString(2, 4));
-		// System.out.println(v.subString(2, 4).getValue());
-    }
+	}
 }
