@@ -32,9 +32,9 @@ public char[] toCharArray()
 
 ## Build
 
-```
-javac com/asrez/main.java
-java com.asrez.main
+```bash
+$ javac com/asrez/main.java
+$ java com.asrez.main
 ```
 
 ---------
