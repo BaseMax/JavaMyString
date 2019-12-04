@@ -168,7 +168,6 @@ public class MyString {
 		return -1;
 	}
 
-
 	public boolean equalsIgnoreCase(MyString other) {
 		if(this.length != other.length)
 			return false;
@@ -291,7 +290,6 @@ public class MyString {
 		return result;
 	}
 
-
 	public static MyString valueOf(boolean b) {
 		if(b) 
 			return new MyString("true");
@@ -308,7 +306,6 @@ public class MyString {
 	public String toString() {
 		return new String(array);
 	}
-
 
 	public boolean equals(Object o) {
 		MyString other;
