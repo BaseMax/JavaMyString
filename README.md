@@ -9,6 +9,7 @@ A tiny implementation of **String** class in java as final project.
 - Tiny code (Suitable to learn from it)
 - Own class
 - Suitable performance
+- Support `printf` with variable arguments (Varargs)
 
 ## Structure
 
@@ -28,6 +29,9 @@ public void setAt(int index, char c)
 public MyString subString(int low, int high)
 public MyString subString(int low)
 public char[] toCharArray()
+static public void printf(char[] format, Object... arguments)
+static public void printf(String format, Object... arguments)
+static public void printf(MyString format, Object... arguments)
 ```
 
 ## Build
