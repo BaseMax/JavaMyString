@@ -445,19 +445,6 @@ public class MyString {
 		// System.out.println("");
 	}
 
-	public int indexOf(char ch) {
-		int fromIndex = 0;
-		if(fromIndex < 0)
-			fromIndex = 0;
-		else if(fromIndex >= length)
-			return -1;
-
-		for(int i = fromIndex; i < length; i++)
-			if(array[i] == ch)
-				return i;
-		return -1;
-	}
-
 	public int length() {
 		return length;
 	}
