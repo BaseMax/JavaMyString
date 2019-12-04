@@ -54,6 +54,11 @@ public class main {
 		input3 = input2.subString(-5, 90);
 		input3.display();
 
+		System.out.println("Stage10"); //////////////////////////
+
+		input1.toLowerCase().display();
+		input1.toUpperCase().display();
+
 		MyString.printf("Hello %% '%d' %% %s with %f value%c\n", 110, "Hello", 3.14, '!');
 	}
 }
