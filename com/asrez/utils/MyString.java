@@ -68,6 +68,92 @@ public class MyString {
 		return true;
 	}
 
+	static public void printf(char[] format, Object... arguments) {
+		MyString mystr=new MyString(format);
+		printf(mystr, arguments);
+	}
+
+	static public void printf(String format, Object... arguments) {
+		char[] formats=format.toCharArray();
+		MyString mystr=new MyString(formats);
+		printf(mystr, arguments);
+	}
+
+	static public void printf(MyString format, Object... arguments) {
+		int argumentIndex=0;
+		for(int i = 0; i < format.array.length; i++) {
+			if(format.array[i] == '%') {
+				if(format.array.length > i+1 && format.array[i+1] == '%') {
+					System.out.print(format.array[i]);
+					i++;
+				}
+				else {
+					i++;
+					switch(format.array[i]) {
+						case 'd': {
+							if(arguments.length <= argumentIndex)
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							try {
+								System.out.print((Integer) arguments[argumentIndex]);
+							} catch (ArrayIndexOutOfBoundsException exception) {
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							}
+							argumentIndex++;
+						}
+						break;
+						case 'f': {
+							if(arguments.length <= argumentIndex)
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							try {
+								System.out.print((Double) arguments[argumentIndex]);
+							} catch (ArrayIndexOutOfBoundsException exception) {
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							}
+							argumentIndex++;
+						}
+						break;
+						case 'l': {
+							if(arguments.length <= argumentIndex)
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							try {
+								System.out.print((Long) arguments[argumentIndex]);
+							} catch (ArrayIndexOutOfBoundsException exception) {
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							}
+							argumentIndex++;
+						}
+						break;
+						case 'c': {
+							if(arguments.length <= argumentIndex)
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							try {
+								System.out.print((char) arguments[argumentIndex]);
+							} catch (ArrayIndexOutOfBoundsException exception) {
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							}
+							argumentIndex++;
+						}
+						break;
+						case 's': {
+							if(arguments.length <= argumentIndex)
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							try {
+								System.out.print((String) arguments[argumentIndex]);
+							} catch (ArrayIndexOutOfBoundsException exception) {
+								throw new StringIndexOutOfBoundsException(argumentIndex);
+							}
+							argumentIndex++;
+						}
+						break;
+					}
+				}
+			}
+			else {
+				System.out.print(format.array[i]);
+			}
+		}
+	}
+
 	public char charAt(int index) {
 		if((index < 0) || (index >= array.length))
 			throw new StringIndexOutOfBoundsException(index);
