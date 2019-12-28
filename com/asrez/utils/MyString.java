@@ -11,7 +11,7 @@ package com.asrez.utils;
  * @Reference : https://courses.cs.washington.edu/courses/cse341/98au/java/jdk1.2beta4/docs/api/java/lang/String.html
  *
  **/
-public class MyString {
+class MyString {
 	private final int DEFAULT_ARRAY_SIZE = 10;
 	private char[] array;
 	private int length;
@@ -64,8 +64,27 @@ public class MyString {
 		return indexOf(ch, 0);
 	}
 
+	public boolean contains(String value) {
+		return contains(new MyString(value));
+	}
+
+	public boolean contains(char[] value) {
+		return contains(new MyString(value));
+	}
+
+	public boolean contains(MyString value) {
+		if(indexOf(value) != -1) {
+			return true;
+		}
+		return false;
+	}
+
 	public int indexOf(MyString str) {
 		return indexOf(str, 0);
+	}
+
+	public int indexOf(char[] str, int fromIndex) {
+		return indexOf(new MyString(str), fromIndex);
 	}
 
 	public int indexOf(MyString str, int fromIndex) {
@@ -238,6 +257,13 @@ public class MyString {
 		return temp;
 	}
 
+	public MyString toLowerCaseAndUpdate() {
+		MyString temp = toLowerCase();
+		this.length=temp.length;
+		this.array=temp.array;
+		return this;
+	}
+
 	public MyString toUpperCase() {
 		MyString temp = new MyString(); 
 		temp.length = this.length;
@@ -253,6 +279,13 @@ public class MyString {
 		return temp;
 	}
 
+	public MyString toUpperCaseAndUpdate() {
+		MyString temp = toUpperCase();
+		this.length=temp.length;
+		this.array=temp.array;
+		return this;
+	}
+
 	public int compareTo(MyString value) {
 		if(this.length != value.length)
 			return this.length - value.length;
@@ -265,29 +298,33 @@ public class MyString {
 	}
 
 	public int compareToIgnoreCase(MyString value) {
-		return this.toLowerCase().compareTo(value.toLowerCase());		
+		return this.toLowerCase().compareTo(value.toLowerCase());
 	}
 
 	public MyString trim() {
-		int frontSpaces = 0, backSpaces = 0;
-		int i = 0;
+		int frontSpaces = 0;
+		int backSpaces = 0;
+		int i = 0;// from first
 		while((i < length) &&(array[i++] == ' ')) 
-			frontSpaces++; 
-		
-		i = length - 1;
+			frontSpaces++;
+		i = length - 1;// from last
 		while((i >= frontSpaces) &&(array[i--] == ' '))  
 			backSpaces++;
-		
 		MyString result = new MyString();
-		
-		if((frontSpaces + backSpaces) <= length)
-		{
+		if((frontSpaces + backSpaces) <= length) {
 			result.length = this.length - frontSpaces - backSpaces;
 			result.array = new char [result.length];
 			for(i = 0; i < result.length; i++)
 				result.array[i] = this.array[i + frontSpaces];
 		}
 		return result;
+	}
+
+	public MyString trimAndUpdate() {
+		MyString temp = trim();
+		this.length=temp.length;
+		this.array=temp.array;
+		return this;
 	}
 
 	public static MyString valueOf(boolean b) {
@@ -506,5 +543,163 @@ public class MyString {
 
 	public char[] toCharArray() {
 		return array;
+	}
+
+	public boolean startsWith(MyString prefix) {
+		return startsWith(prefix, 0);
+	}
+
+	public boolean startsWith(String prefix) {
+		return startsWith(new MyString(prefix), 0);
+	}
+
+	public boolean startsWith(String prefix, int offset) {
+		return startsWith(new MyString(prefix), offset);
+	}
+
+	public boolean startsWith(MyString prefix, int offset) {
+		int to = offset;
+		char pa[] = prefix.toCharArray();
+		int po = 0;
+		int pc = prefix.length();
+		if((offset < 0) || (offset > length() - pc)) {
+			return false;
+		}
+		while(--pc >= 0) {
+			if (array[to++] != pa[po++]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// public boolean endsWith(String suffix, index offset) {
+	public boolean endsWith(String suffix) {
+		int start = length() - suffix.length();
+		if(start >= 0) {
+			return indexOf(suffix, start) >= 0;
+		}
+		return false;
+	}
+
+	public boolean endsWith(char[] search) {
+		return endsWith(String.copyValueOf(search));
+	}
+
+	//count: second string is in the first
+	public int count(char[] search) {
+		return count(new MyString(search));
+	}
+
+	public int count(String search) {
+		return count(search.toCharArray());
+	}
+
+	public int count(MyString search) {
+		int counter=0;
+		int i=-1;
+		i=indexOf(search, i+1);
+		while(i!=-1) {
+			i=indexOf(search, i+1);
+			counter++;
+		}
+		return counter;
+	}
+
+	public MyString replaceAndUpdate(String search, String replace) {
+		return replaceAndUpdate(new MyString(search), new MyString(replace));
+	}
+
+	public MyString replaceAndUpdate(MyString search, MyString replace) {
+		MyString temp=replace(search, replace);
+		this.array=temp.array;
+		this.length=temp.length;
+		return temp;
+	}
+
+	public MyString replace(String search, String replace) {
+		return replace(new MyString(search), new MyString(replace));
+	}
+
+	public MyString replace(MyString search, MyString replace) {
+		return replace(search, replace, 0);
+	}
+
+	public MyString replace(String search, String replace, int limit) {
+		return replace(new MyString(search), new MyString(replace), limit);
+	}
+
+	public MyString replaceFirst(MyString search, MyString replace) {
+		return replace(search, replace, 1);
+	}
+
+	public MyString replaceFirst(String search, String replace) {
+		return replace(new MyString(search), new MyString(replace), 1);
+	}
+
+	public MyString replace(MyString search, MyString replace, int limit) {
+		// char[] searchArr = search.toCharArray();
+		// char[] replaceArr = replace.toCharArray();
+		// int numTimes = count(searchArr);
+		// // System.out.println(numTimes);
+		// char[] strResult = new char[length + Math.abs(numTimes*(replaceArr.length-searchArr.length))];
+		// System.arraycopy(array, 0, strResult, 0, array.length);
+		// MyString temp = new MyString(strResult);
+		// temp.display();
+		// return temp;
+
+		StringBuilder sb = null;
+		int start = 0;
+		int did=0;
+		for(int i; (i = indexOf(search, start)) != -1; ) {
+			if(sb == null)
+				sb = new StringBuilder();
+			sb.append(new String(this.array), start, i);
+			sb.append(replace);
+			start = i + search.length();
+			did++;
+			if(did == limit) {
+				break;
+			}
+		}
+		if(sb == null)
+			return this;
+		sb.append(new String(this.array), start, length);
+		return new MyString(sb.toString());
+		// MyString temp = new MyString(sb.toString());
+		// return temp;
+	}
+
+	public MyString replaceAndUpdate(char oldChar, char newChar) {
+		MyString s=new MyString(replace(oldChar, newChar));
+		this.array=s.array;
+		this.length=s.length;
+		return this;
+	}
+
+	public MyString replace(char oldChar, char newChar) {
+		if(oldChar != newChar) {
+			int len = length;
+			int i = -1;
+			while(++i < len) {
+				if(array[i] == oldChar) {
+					break;
+				}
+			}
+			if(i < len) {
+				char buf[] = new char[len];
+				for(int j = 0; j < i; j++) {
+				   buf[j] = array[j];
+				}
+				while(i < len) {
+					char c = array[i];
+					buf[i] = (c == oldChar) ? newChar : c;
+					i++;
+				}
+				MyString s=new MyString(buf);
+				return s;
+			}
+		}
+		return this;
 	}
 }

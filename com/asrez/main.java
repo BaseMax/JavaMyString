@@ -60,5 +60,22 @@ public class main {
 		input1.toUpperCase().display();
 
 		MyString.printf("Hello %% '%d' %% %s with %f value%c\n", 110, "Hello", 3.14, '!');
+
+// 		System.out.println("Hello!");
+		// MyString s=new MyString("hello");
+		MyString s=new MyString("hello how are youllol? are you llolo?");
+		System.out.println(s.count("l"));
+// 		s.replaceAndUpdate('l', '*');
+// 		s.display();
+		// s.replaceAndUpdate("l", "*");
+		// s.display();
+		s=s.replace("l", "*", 1);
+		s.display();
+// 		if(s.startsWith("hel")) {
+// 			System.out.println("yes");
+// 		}
+// 		else {
+// 			System.out.println("no");
+// 		}
 	}
 }
