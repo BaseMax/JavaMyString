@@ -11,7 +11,7 @@ A tiny implementation of **String** class in java as final project.
 - Suitable performance
 - Support `printf` with variable arguments (Varargs)
 
-## Structure
+## Class/Library Structure
 
 ```java
 public MyString();
